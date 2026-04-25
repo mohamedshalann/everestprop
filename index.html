@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EverestProp - قمة العقارات العالمية</title>
+    <meta name="description" content="منصة عقارية عالمية للبيع والشراء والإيجار">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Tajawal', 'Segoe UI', Tahoma, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-radius: 0 0 20px 20px;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #555;
+            font-weight: 500;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        .nav-links a:hover {
+            color: #667eea;
+        }
+
+        .btn-add {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white !important;
+            padding: 8px 20px;
+            border-radius: 25px;
+        }
+
+        .prices-bar {
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 12px;
+            border-radius: 50px;
+            margin: 20px 0;
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .price-item {
+            font-size: 14px;
+        }
+
+        .price-value {
+            font-weight: bold;
+            color: #ffd700;
+        }
+
+        .search-section {
+            background: white;
+            border-radius: 30px;
+            padding: 40px;
+            margin: 30px 0;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+
+        .search-form {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .search-input {
+            padding: 15px 25px;
+            border: 2px solid #e0e0e0;
+            border-radius: 50px;
+            font-size: 16px;
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .search-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .search-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .section-title {
+            font-size: 32px;
+            color: white;
+            margin: 40px 0 20px;
+            text-align: center;
+        }
+
+        .properties-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 30px;
+            margin: 30px 0;
+        }
+
+        .property-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        .property-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .property-image {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 50px;
+        }
+
+        .property-info {
+            padding: 20px;
+        }
+
+        .property-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .property-price {
+            color: #667eea;
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .property-price-egp {
+            color: #888;
+            font-size: 14px;
+        }
+
+        .property-location {
+            color: #777;
+            font-size: 14px;
+            margin: 10px 0;
+        }
+
+        .property-type {
+            display: inline-block;
+            background: #f0f0f0;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+        }
+
+        .ayah-section {
+            background: rgba(255,255,255,0.95);
+            border-radius: 20px;
+            padding: 20px;
+            text-align: center;
+            margin: 40px 0;
+            font-size: 20px;
+            font-weight: bold;
+            color: #2d6a4f;
+        }
+
+        .share-section {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            color: white;
+            margin: 40px 0;
+        }
+
+        .share-btn {
+            background: white;
+            color: #f5576c;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-size: 16px;
+            margin-top: 15px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .footer {
+            background: #1a1a2e;
+            color: white;
+            text-align: center;
+            padding: 30px;
+            border-radius: 20px 20px 0 0;
+            margin-top: 50px;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-content h3 {
+            margin-bottom: 20px;
+            color: #667eea;
+        }
+
+        .bank-info {
+            background: #f0f0f0;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .close-modal {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+            .section-title {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-content container">
+            <div class="logo">🏔️ EverestProp</div>
+            <div class="nav-links">
+                <a onclick="showPage('home')">الرئيسية</a>
+                <a onclick="showPage('search')">بحث</a>
+                <a onclick="showPage('add')" class="btn-add">➕ إضافة عقار</a>
+                <a onclick="showPage('dashboard')">📋 لوحة التحكم</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="container" id="homePage">
+        <div class="prices-bar" id="pricesBar">
+            <span class="price-item">🥇 الذهب: <span class="price-value" id="goldPrice">جاري التحميل...</span></span>
+            <span class="price-item">💵 الدولار: <span class="price-value" id="usdPrice">جاري التحميل...</span> ج.م</span>
+            <span class="price-item">💶 اليورو: <span class="price-value" id="eurPrice">جاري التحميل...</span> ج.م</span>
+            <span class="price-item">🇸🇦 الريال: <span class="price-value" id="sarPrice">جاري التحميل...</span> ج.م</span>
+        </div>
+
+        <div class="search-section">
+            <div class="search-form">
+                <input type="text" id="searchCountry" placeholder="🌍 البلد" class="search-input">
+                <input type="text" id="searchCity" placeholder="🏙️ المدينة" class="search-input">
+                <select id="searchType" class="search-input">
+                    <option value="">الكل</option>
+                    <option value="شقة">شقة</option>
+                    <option value="أرض">أرض</option>
+                    <option value="فيلا">فيلا</option>
+                    <option value="محل">محل</option>
+                </select>
+                <select id="searchTransaction" class="search-input">
+                    <option value="">الكل</option>
+                    <option value="بيع">بيع</option>
+                    <option value="إيجار">إيجار</option>
+                </select>
+                <button class="search-btn" onclick="searchProperties()">🔍 ابحث</button>
+            </div>
+        </div>
+
+        <h2 class="section-title">⭐ عقارات مميزة</h2>
+        <div class="properties-grid" id="featuredGrid"></div>
+
+        <h2 class="section-title">🆕 أحدث العقارات</h2>
+        <div class="properties-grid" id="latestGrid"></div>
+
+        <div class="ayah-section">
+            ﴿ يَا أَيُّهَا الَّذِينَ آمَنُوا أَوْفُوا بِالْعُقُودِ ﴾ [المائدة: 1]
+        </div>
+
+        <div class="share-section">
+            <h3>🎁 شارك الموقع ليصبح عقارك مميزاً مجاناً</h3>
+            <button class="share-btn" onclick="shareSite()">📢 شارك الآن</button>
+        </div>
+    </div>
+
+    <div class="container" id="searchPage" style="display:none">
+        <h1 style="color:white">نتائج البحث</h1>
+        <div class="properties-grid" id="searchGrid"></div>
+        <button onclick="showPage('home')" style="margin-top:20px;background:#667eea;color:white;padding:10px 20px;border:none;border-radius:25px">← العودة</button>
+    </div>
+
+    <div class="container" id="addPage" style="display:none">
+        <div style="background:white;border-radius:20px;padding:30px">
+            <h1>➕ إضافة عقار جديد</h1>
+            <form id="addPropertyForm">
+                <input type="text" id="propTitle" placeholder="عنوان العقار" class="search-input" required>
+                <select id="propType" class="search-input">
+                    <option value="شقة">شقة</option>
+                    <option value="أرض">أرض</option>
+                    <option value="فيلا">فيلا</option>
+                    <option value="محل">محل</option>
+                </select>
+                <select id="propTransaction" class="search-input">
+                    <option value="بيع">بيع</option>
+                    <option value="إيجار">إيجار</option>
+                </select>
+                <input type="text" id="propCountry" placeholder="البلد" class="search-input" required>
+                <input type="text" id="propCity" placeholder="المدينة" class="search-input" required>
+                <input type="number" id="propPrice" placeholder="السعر بالدولار" class="search-input" required>
+                <textarea id="propDesc" placeholder="وصف العقار" class="search-input" rows="4"></textarea>
+                <button type="button" class="search-btn" onclick="addProperty()">إضافة العقار</button>
+            </form>
+            <button onclick="showPage('home')" style="margin-top:20px">← العودة</button>
+        </div>
+    </div>
+
+    <div class="container" id="dashboardPage" style="display:none">
+        <div style="background:white;border-radius:20px;padding:30px">
+            <h1>📋 لوحة التحكم</h1>
+            <h3>عقاراتي</h3>
+            <div id="userPropertiesGrid"></div>
+            <button onclick="showPage('home')" style="margin-top:20px">← العودة</button>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>EverestProp - منصة عقارية عالمية</p>
+        <small>الموقع وسيط فقط، ننصح بمراجعة الأوراق الرسمية</small>
+    </div>
+
+    <!-- مودال الدفع -->
+    <div id="paymentModal" class="modal">
+        <div class="modal-content">
+            <h3>💳 طريقة الدفع (عمولة السمسرة 1%)</h3>
+            <div class="bank-info">
+                <p>🏦 البنك الأهلي المصري<br>IBAN: EG20003041650001374988010160</p>
+                <p>💳 PayPal: mohamedgabershalan@gmail.com</p>
+                <p>₿ Bitcoin (BSC): 0x93edbf8b70486a4c8a6d8a2b59ac304ecb90c3a9</p>
+            </div>
+            <div class="ayah">﴿ وَأَوْفُوا بِالْعُقُودِ ﴾</div>
+            <button class="close-modal" onclick="closePaymentModal()">إغلاق</button>
+        </div>
+    </div>
+
+    <script>
+        // بيانات العقارات (مخزنة في Local Storage)
+        let properties = JSON.parse(localStorage.getItem('everestprop_properties')) || [];
+
+        // بيانات المستخدم الحالي
+        let currentUser = JSON.parse(localStorage.getItem('everestprop_current_user')) || null;
+        let users = JSON.parse(localStorage.getItem('everestprop_users')) || [];
+
+        // أسعار العملات
+        async function fetchPrices() {
+            try {
+                const response = await fetch('https://api.exchangerate-api.com/v4/latest/USD');
+                const data = await response.json();
+                const egpRate = data.rates.EGP || 30.9;
+                
+                document.getElementById('goldPrice').innerText = '$1920';
+                document.getElementById('usdPrice').innerText = egpRate.toFixed(2);
+                document.getElementById('eurPrice').innerText = (data.rates.EUR || 33.5).toFixed(2);
+                document.getElementById('sarPrice').innerText = (data.rates.SAR || 8.25).toFixed(2);
+            } catch(e) {
+                document.getElementById('goldPrice').innerText = '$1920';
+                document.getElementById('usdPrice').innerText = '30.90';
+                document.getElementById('eurPrice').innerText = '33.50';
+                document.getElementById('sarPrice').innerText = '8.25';
+            }
+        }
+
+        // عرض العقارات
+        function displayProperties() {
+            const featured = properties.filter(p => p.isFeatured).slice(0,6);
+            const latest = [...properties].reverse().slice(0,9);
+            
+            displayGrid('featuredGrid', featured);
+            displayGrid('latestGrid', latest);
+        }
+
+        function displayGrid(elementId, props) {
+            const grid = document.getElementById(elementId);
+            if(!grid) return;
+            
+            if(props.length === 0) {
+                grid.innerHTML = '<p style="color:white;text-align:center">لا توجد عقارات حالياً</p>';
+                return;
+            }
+            
+            grid.innerHTML = props.map(prop => `
+                <div class="property-card" onclick="showPropertyDetails(${prop.id})">
+                    <div class="property-image">🏠</div>
+                    <div class="property-info">
+                        <div class="property-title">${prop.title}</div>
+                        <div class="property-price">$${prop.price.toLocaleString()}</div>
+                        <div class="property-location">📍 ${prop.city}, ${prop.country}</div>
+                        <span class="property-type">${prop.type} - ${prop.transaction}</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function showPropertyDetails(id) {
+            const prop = properties.find(p => p.id === id);
+            if(!prop) return;
+            
+            document.getElementById('paymentModal').style.display = 'flex';
+        }
+
+        function closePaymentModal() {
+            document.getElementById('paymentModal').style.display = 'none';
+        }
+
+        // إضافة عقار
+        function addProperty() {
+            if(!currentUser) {
+                alert('الرجاء إنشاء حساب أولاً');
+                showPage('register');
+                return;
+            }
+            
+            const newProp = {
+                id: Date.now(),
+                title: document.getElementById('propTitle').value,
+                type: document.getElementById('propType').value,
+                transaction: document.getElementById('propTransaction').value,
+                country: document.getElementById('propCountry').value,
+                city: document.getElementById('propCity').value,
+                price: parseFloat(document.getElementById('propPrice').value),
+                description: document.getElementById('propDesc').value,
+                userId: currentUser.id,
+                isFeatured: false,
+                date: new Date().toISOString()
+            };
+            
+            if(!newProp.title || !newProp.country || !newProp.city || !newProp.price) {
+                alert('الرجاء ملء جميع الحقول المطلوبة');
+                return;
+            }
+            
+            properties.push(newProp);
+            localStorage.setItem('everestprop_properties', JSON.stringify(properties));
+            
+            alert('تم إضافة العقار بنجاح!');
+            document.getElementById('addPropertyForm').reset();
+            showPage('home');
+            displayProperties();
+            updateDashboard();
+        }
+
+        // البحث
+        function searchProperties() {
+            const country = document.getElementById('searchCountry').value.toLowerCase();
+            const city = document.getElementById('searchCity').value.toLowerCase();
+            const type = document.getElementById('searchType').value;
+            const transaction = document.getElementById('searchTransaction').value;
+            
+            let results = [...properties];
+            
+            if(country) results = results.filter(p => p.country.toLowerCase().includes(country));
+            if(city) results = results.filter(p => p.city.toLowerCase().includes(city));
+            if(type) results = results.filter(p => p.type === type);
+            if(transaction) results = results.filter(p => p.transaction === transaction);
+            
+            displayGrid('searchGrid', results);
+            showPage('search');
+        }
+
+        // لوحة التحكم
+        function updateDashboard() {
+            if(!currentUser) return;
+            const userProps = properties.filter(p => p.userId === currentUser.id);
+            const grid = document.getElementById('userPropertiesGrid');
+            
+            if(userProps.length === 0) {
+                grid.innerHTML = '<p>لا توجد عقارات مضافة</p>';
+                return;
+            }
+            
+            grid.innerHTML = userProps.map(prop => `
+                <div class="property-item" style="border:1px solid #ddd;padding:15px;margin:10px 0;border-radius:10px">
+                    <strong>${prop.title}</strong> - $${prop.price.toLocaleString()}
+                    <br>
+                    <button onclick="showPropertyDetails(${prop.id})" style="background:#667eea;color:white;border:none;padding:5px 10px;border-radius:5px;margin-top:10px">عرض تفاصيل الدفع</button>
+                    <button onclick="deleteProperty(${prop.id})" style="background:#f5576c;color:white;border:none;padding:5px 10px;border-radius:5px;margin-top:10px">حذف</button>
+                </div>
+            `).join('');
+        }
+
+        function deleteProperty(id) {
+            if(confirm('هل أنت متأكد من حذف هذا العقار؟')) {
+                properties = properties.filter(p => p.id !== id);
+                localStorage.setItem('everestprop_properties', JSON.stringify(properties));
+                displayProperties();
+                updateDashboard();
+                alert('تم حذف العقار بنجاح');
+            }
+        }
+
+        // إدارة المستخدمين
+        function register() {
+            const username = document.getElementById('regUsername')?.value;
+            const email = document.getElementById('regEmail')?.value;
+            const password = document.getElementById('regPassword')?.value;
+            const phone = document.getElementById('regPhone')?.value;
+            
+            if(!username || !email || !password) {
+                alert('الرجاء ملء جميع الحقول المطلوبة');
+                return;
+            }
+            
+            const existing = users.find(u => u.email === email);
+            if(existing) {
+                alert('البريد الإلكتروني موجود مسبقاً');
+                return;
+            }
+            
+            const newUser = {
+                id: Date.now(),
+                username,
+                email,
+                password,
+                phone
+            };
+            
+            users.push(newUser);
+            localStorage.setItem('everestprop_users', JSON.stringify(users));
+            currentUser = newUser;
+            localStorage.setItem('everestprop_current_user', JSON.stringify(currentUser));
+            
+            alert('تم إنشاء الحساب بنجاح!');
+            showPage('home');
+            updateDashboard();
+        }
+
+        function login() {
+            const email = document.getElementById('loginEmail')?.value;
+            const password = document.getElementById('loginPassword')?.value;
+            
+            const user = users.find(u => u.email === email && u.password === password);
+            if(user) {
+                currentUser = user;
+                localStorage.setItem('everestprop_current_user', JSON.stringify(currentUser));
+                alert(`مرحباً ${user.username}`);
+                showPage('home');
+                updateDashboard();
+            } else {
+                alert('البريد الإلكتروني أو كلمة المرور غير صحيحة');
+            }
+        }
+
+        function logout() {
+            currentUser = null;
+            localStorage.removeItem('everestprop_current_user');
+            alert('تم تسجيل الخروج');
+            showPage('home');
+        }
+
+        function showPage(page) {
+            document.getElementById('homePage').style.display = page === 'home' ? 'block' : 'none';
+            document.getElementById('searchPage').style.display = page === 'search' ? 'block' : 'none';
+            document.getElementById('addPage').style.display = page === 'add' ? 'block' : 'none';
+            document.getElementById('dashboardPage').style.display = page === 'dashboard' ? 'block' : 'none';
+            
+            if(page === 'home') displayProperties();
+            if(page === 'dashboard') updateDashboard();
+        }
+
+        function shareSite() {
+            if(navigator.share) {
+                navigator.share({title:'EverestProp', url:window.location.href});
+            } else {
+                alert('انسخ الرابط: ' + window.location.href);
+            }
+        }
+
+        // إضافة عقارات تجريبية
+        function addSampleProperties() {
+            if(properties.length === 0) {
+                properties.push({
+                    id: 1,
+                    title: 'شقة فاخرة في القاهرة الجديدة',
+                    type: 'شقة',
+                    transaction: 'بيع',
+                    country: 'مصر',
+                    city: 'القاهرة',
+                    price: 250000,
+                    description: 'شقة 3 غرف 2 حمام',
+                    isFeatured: true,
+                    userId: null,
+                    date: new Date().toISOString()
+                });
+                properties.push({
+                    id: 2,
+                    title: 'أرض للبيع في إسطنبول',
+                    type: 'أرض',
+                    transaction: 'بيع',
+                    country: 'تركيا',
+                    city: 'إسطنبول',
+                    price: 180000,
+                    description: 'أرض 500 متر',
+                    isFeatured: true,
+                    userId: null,
+                    date: new Date().toISOString()
+                });
+                properties.push({
+                    id: 3,
+                    title: 'فيلا في دبي',
+                    type: 'فيلا',
+                    transaction: 'بيع',
+                    country: 'الإمارات',
+                    city: 'دبي',
+                    price: 850000,
+                    description: 'فيلا 5 غرف',
+                    isFeatured: true,
+                    userId: null,
+                    date: new Date().toISOString()
+                });
+                localStorage.setItem('everestprop_properties', JSON.stringify(properties));
+            }
+        }
+
+        // بدء التشغيل
+        fetchPrices();
+        addSampleProperties();
+        displayProperties();
+        
+        // تحديث الأسعار كل دقيقة
+        setInterval(fetchPrices, 60000);
+    </script>
+</body>
+  </html>
